@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap");
+
+:root {
+  --bg-color: #303333;
+  --dark-color: #444444;
+}
+
+* {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  font-family: "Rubik", sans-serif;
+}
+
+/* Main */
+.separator1 {
+  width: 100%;
+  height: 4px;
+  background-color: var(--dark-color);
+  position: absolute;
+}
+
+.separator2 {
+  width: 100%;
+  height: 1px;
+  background-color: #950000;
+  position: absolute;
+  z-index: 100;
+}
+
+/* Background */
+.background {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  position: absolute;
+}
+
+.watermark {
+  font-size: 5rem;
+  position: absolute;
+  bottom: 370px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: #333636;
+}
+
+.horizontalIndicator {
+  height: 100%;
+  position: absolute;
+  width: 2px;
+  background-color: #808080;
+  z-index: 10;
+}
+
+/* PreviewArea */
+.previewBar {
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 0 0 2px black inset;
+  z-index: 20;
+}
+
+.verticalIndicator {
+  left: 0;
+  right: 0;
+  position: absolute;
+  height: 1px;
+  background-color: var(--dark-color);
+  z-index: 0;
+}
+
+/* Keyboard */
+.keys {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  background-color: var(--bg-color);
+  border-top: 1px solid black;
+  z-index: 30;
+}
+
+.whiteKeySeparator {
+  background-color: black;
+  width: 2px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  margin-left: -1px;
+  margin-right: -1px;
+  position: relative;
+  z-index: 50;
+}
+
+.whiteKey {
+  background-color: #f5f5ea;
+  border: 1px solid black;
+  display: inline-block;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.whiteKeyActive {
+  box-shadow: 3px 0 8px -3px rgba(0, 0, 0, 0.6) inset,
+    -3px 0 8px -3px rgba(0, 0, 0, 0.6) inset;
+}
+
+.blackKey {
+  background-color: black;
+  display: inline-block;
+  position: relative;
+  z-index: 100;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border: 2px solid black;
+  border-top: 1px solid black;
+  box-shadow: 2px 0 2px black;
+}
+
+.blackKeyActive {
+  box-shadow: 0 0 2px black inset, 2px 0 2px rgba(0, 0, 0, 0.8);
+}
+
+.blackKeyInner {
+  position: relative;
+  border-left: 5px solid #222222;
+  border-right: 5px solid #222222;
+  border-bottom: 25px solid #292929;
+  width: 100%;
+  height: 100%;
+}
+
+.blackKeyInnerActive {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cIndicator {
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+/* Animation */
+.keyAnimation {
+  height: 30px;
+  z-index: 150;
+  position: absolute;
+  top: -20px;
+  left: -8px; /* half an element's width offset */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  filter: blur(1px);
+  clip-path: inset(-500px -500px 13px -500px);
+  z-index: 0;
+}
+
+.keyAnimationElement {
+  margin-left: 0px;
+  margin-right: -15px; /* one element per pixel width */
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 32px;
+  width: 16px;
+  position: relative;
+  border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+  mix-blend-mode: soft-light;
+  background-image: radial-gradient(white, rgba(255, 255, 255, 0.2));
+}
+
+.activeIndicator {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  z-index: 100;
+}
