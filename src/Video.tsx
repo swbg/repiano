@@ -1,10 +1,10 @@
 import { Midi } from "@tonejs/midi";
 import { useCallback, useEffect, useState } from "react";
 import { Composition, continueRender, delayRender } from "remotion";
+import { Main } from "./components/Main";
 import { audioSrc, midiSrc } from "./config";
 import { fps, introFrames, outroFrames } from "./const";
 import "./index.css";
-import { Main } from "./Main";
 
 export const RemotionVideo: React.FC = () => {
   const [handle] = useState(() => delayRender());

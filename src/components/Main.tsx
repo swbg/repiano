@@ -1,19 +1,5 @@
 import { Midi } from "@tonejs/midi";
-import { useEffect, useState } from "react";
-import {
-  Audio,
-  continueRender,
-  delayRender,
-  Sequence,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
-import { Background } from "./components/Background";
-import { Outro } from "./components/generic/Outro";
-import { Keyboard } from "./components/Keyboard";
-import { Intro } from "./components/pokemon/Intro";
-import { TopBar } from "./components/pokemon/TopBar";
-import { PreviewArea } from "./components/PreviewArea";
+import { Audio, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 import {
   introFrames,
   introTransitionFrames,
@@ -21,7 +7,13 @@ import {
   pureIntroFrames,
   pureOutroFrames,
   whiteKeyHeight,
-} from "./const";
+} from "../const";
+import { Background } from "./Background";
+import { Outro } from "./generic/Outro";
+import { Keyboard } from "./Keyboard";
+import { Intro } from "./pokemon/Intro";
+import { TopBar } from "./pokemon/TopBar";
+import { PreviewArea } from "./PreviewArea";
 
 export const Main: React.FC<{
   midi: Midi;
