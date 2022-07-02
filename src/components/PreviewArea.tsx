@@ -1,46 +1,44 @@
-import { barLength, previewDuration, previewHeight } from "../const";
-import { Score } from "../types";
-import { getTotalDuration } from "../utils";
+import { Midi } from "@tonejs/midi";
+import { midiIdxOffset, previewDuration, previewHeight } from "../const";
 import { PreviewBar } from "./PreviewBar";
 import { VerticalIndicator } from "./VerticalIndicator";
 
-const getPreviewedKeys = (score: Score, frame: number, totalFrames: number) => {
-  return score.map((voice) => {
-    const cumSum = (
-      (sum: number): ((value: number) => number) =>
-      (value: number): number =>
-        (sum += value)
-    )(0);
-    const cumDuration = voice.map((note) => note[1]).map(cumSum);
-    const firstDuration =
-      (frame / totalFrames) * cumDuration[cumDuration.length - 1];
+const getPreviewedKeys = (midi: Midi, frame: number, coreFrames: number) => {
+  return midi.tracks.map((track) => {
+    // Corresponding duration at bottom of preview area (top of keyboard)
+    const firstDuration = (frame / coreFrames) * track.duration;
+    // Corresponding duration at top of preview area (top of screen)
     const lastDuration = firstDuration + previewDuration;
-    const firstIndex = cumDuration.findIndex((value) => value > firstDuration);
-    const lastIndex = cumDuration.findIndex((value) => value > lastDuration);
 
-    return voice
-      .slice(firstIndex, lastIndex < 0 ? undefined : lastIndex + 1)
-      .map((note, index) => {
-        const startDuration = cumDuration[firstIndex + index];
-
+    return track.notes
+      .filter(
+        (note) =>
+          note.time + note.duration >= firstDuration &&
+          note.time <= lastDuration
+      )
+      .map((note) => {
         const positionY =
-          (1 - (startDuration - firstDuration) / previewDuration) *
+          (1 - (note.time + note.duration - firstDuration) / previewDuration) *
           previewHeight;
-        const height = (note[1] / previewDuration) * previewHeight;
+        const height = (note.duration / previewDuration) * previewHeight;
 
-        return { positionY, height, keyIdx: note[0] };
+        return { positionY, height, keyIdx: note.midi + midiIdxOffset };
       });
   });
 };
 
 const getVerticalIndicators = (
-  score: Score,
+  midi: Midi,
   frame: number,
-  totalFrames: number
+  coreFrames: number
 ) => {
-  const totalDuration = getTotalDuration(score);
-  const firstDuration = (frame / totalFrames) * totalDuration;
+  const firstDuration = (frame / coreFrames) * midi.duration;
   const lastDuration = firstDuration + previewDuration;
+
+  // Calculate bar length
+  const timeSignature = midi.header.timeSignatures[0].timeSignature;
+  const bps = midi.header.tempos[0].bpm / 60;
+  const barLength = ((bps * timeSignature[0]) / timeSignature[1]) * 4;
 
   const visibleIndicators = [];
   for (let i = 0; i * barLength < lastDuration; i++) {
@@ -57,16 +55,12 @@ const getVerticalIndicators = (
 };
 
 export const PreviewArea: React.FC<{
-  score: Score;
+  midi: Midi;
   frame: number;
-  durationInFrames: number;
-}> = ({ score, frame, durationInFrames }) => {
-  const previewBars = getPreviewedKeys(score, frame, durationInFrames);
-  const verticalIndicators = getVerticalIndicators(
-    score,
-    frame,
-    durationInFrames
-  );
+  coreFrames: number;
+}> = ({ midi, frame, coreFrames }) => {
+  const previewBars = getPreviewedKeys(midi, frame, coreFrames);
+  const verticalIndicators = getVerticalIndicators(midi, frame, coreFrames);
 
   return (
     <div className="previewArea">

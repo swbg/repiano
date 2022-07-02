@@ -1,5 +1,4 @@
 import { blackKeyWidth, nWhiteKeys, videoWidth, whiteKeyWidth } from "./const";
-import { Score } from "./types";
 
 export const isBlackKey = (keyIdx: number) => {
   const modIdx = (9 + keyIdx) % 12;
@@ -72,11 +71,4 @@ export const getKeyPosition = (keyIdx: number) => {
   // Shift according to screen width
   positionX -= (nWhiteKeys * whiteKeyWidth - videoWidth) / 2;
   return positionX;
-};
-
-export const getTotalDuration = (score: Score) => {
-  return score.reduce((acc, voice) => {
-    const voiceDuration = voice.reduce((acc, note) => acc + note[1], 0);
-    return acc > voiceDuration ? acc : voiceDuration;
-  }, 0);
 };

@@ -5,6 +5,7 @@ import {
   fps,
   introFrames,
   introTransitionFrames,
+  introWaitFrames,
   videoHeight,
 } from "../../const";
 import backgroundGrass from "./assets/background_grass.png";
@@ -18,7 +19,7 @@ const BG_TILE_SIZE = 8;
 export const Intro: React.FC<{ frame: number }> = ({ frame }) => {
   const opacity = interpolate(
     frame,
-    [introFrames - introTransitionFrames, introFrames],
+    [introFrames - introTransitionFrames, introFrames - introWaitFrames],
     [1, 0],
     {
       extrapolateLeft: "clamp",

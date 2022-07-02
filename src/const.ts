@@ -10,8 +10,6 @@ const substractFromColor = (color: string, sub: number) => {
 
 // Timing
 export const fps = 30;
-export const secondsPerBeat = 0.5;
-export const ticksPerBeat = 480;
 
 // Layout and sizes
 export const videoWidth = 1920;
@@ -26,12 +24,13 @@ export const blackKeyWidth = pxPerCm * 1.5;
 export const whiteKeyHeight = pxPerCm * 14.8;
 export const blackKeyHeight = pxPerCm * 9.8;
 
-// Length of the preview interval
 export const previewHeight = videoHeight - whiteKeyHeight;
-export const previewDuration = 16;
 
-// How long to pause between key strokes
-export const strokeInterval = 0.25;
+// Length of the preview interval in seconds
+export const previewDuration = 8;
+
+// How long to pause between key strokes in seconds
+export const strokeInterval = 0.15;
 
 // Minimum height required for preview bar to be labeled with note name
 export const minLabelPreviewHeight = 25;
@@ -51,20 +50,16 @@ export const blackKeyDarkShadowColors = keyColors.map((c) =>
 // Active animation
 export const aaFramesPerLoop = 15;
 
-// Move to score
-export const barLength = 8;
-export const speedMultiplier = 128;
-
-// Length of fade out screen (keep same for different multipliers)
-export const fadeOutDuration = (32 * 128) / speedMultiplier;
-
 // Length of intro and intro transition
-export const introFrames = fps * 4.5;
-export const introTransitionFrames = fps * 1.5;
+export const introFrames = fps * 8.0; // duration until strack starts
+export const introTransitionFrames = fps * 4.0; // lift white veil and wait for track
+export const introWaitFrames = fps * 2.0; // wait for track
 export const pureIntroFrames = introFrames - introTransitionFrames;
-export const introBreakMultiplier = 2;
 
 // Length of fade out screen
 export const outroFrames = fps * 3;
 export const outroTransitionFrames = fps * 2;
 export const pureOutroFrames = outroFrames - outroTransitionFrames;
+
+// Map midi index to piano key index
+export const midiIdxOffset = -21;

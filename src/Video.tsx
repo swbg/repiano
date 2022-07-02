@@ -1,37 +1,33 @@
-import { Composition } from "remotion";
-import { audio, score } from "./config";
-import {
-  fps,
-  introBreakMultiplier,
-  introTransitionFrames,
-  outroTransitionFrames,
-  pureIntroFrames,
-  pureOutroFrames,
-  secondsPerBeat,
-  speedMultiplier,
-  ticksPerBeat,
-} from "./const";
+import { Midi } from "@tonejs/midi";
+import { useCallback, useEffect, useState } from "react";
+import { Composition, continueRender, delayRender } from "remotion";
+import { audioSrc, midiSrc } from "./config";
+import { fps, introFrames, outroFrames } from "./const";
 import "./index.css";
 import { Main } from "./Main";
-import { Score } from "./types";
-import { getTotalDuration } from "./utils";
 
 export const RemotionVideo: React.FC = () => {
-  const framesMultiplier =
-    (fps * speedMultiplier * secondsPerBeat) / ticksPerBeat;
-  const introDuration =
-    (introBreakMultiplier * introTransitionFrames) / framesMultiplier;
-  const outroDuration = outroTransitionFrames / framesMultiplier;
+  const [handle] = useState(() => delayRender());
+  const [midi, setMidi] = useState<Midi>(new Midi());
+  const [totalFrames, setTotalFrames] = useState(1);
 
-  const paddedScore: Score = score.map((voice) => [
-    [-1, introDuration],
-    ...voice,
-    [-1, outroDuration],
-  ]);
-  const totalFrames =
-    pureIntroFrames +
-    Math.round(getTotalDuration(paddedScore) * framesMultiplier) +
-    pureOutroFrames;
+  const fetchData = useCallback(async () => {
+    const midi = await Midi.fromUrl(midiSrc);
+    setMidi(midi);
+
+    console.log(midi);
+
+    const totalFrames =
+      introFrames + Math.round(midi.duration * fps) + outroFrames;
+    setTotalFrames(totalFrames);
+    console.log(totalFrames);
+
+    continueRender(handle);
+  }, [handle]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <Composition
@@ -42,8 +38,8 @@ export const RemotionVideo: React.FC = () => {
       height={1080}
       durationInFrames={totalFrames}
       defaultProps={{
-        score: paddedScore,
-        audio,
+        midi,
+        audioSrc,
       }}
     />
   );

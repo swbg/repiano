@@ -1,6 +1,5 @@
-import audio from "./audios/route01.wav";
-import { Score } from "./types";
+import { staticFile } from "remotion";
 
-const songTitle = "Route 1";
-const score = require("./scores/route01.json") as Score;
-export { songTitle, score, audio };
+export const songTitle = "Route 1";
+export const midiSrc = staticFile("/midi/route_01.midi");
+export const audioSrc = staticFile("/audio/route_01.wav");
