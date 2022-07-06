@@ -3,7 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Composition, continueRender, delayRender } from "remotion";
 import { Main } from "./components/Main";
 import { audioSrc, midiSrc } from "./config";
-import { fps, introFrames, outroFrames } from "./const";
+import {
+  fps,
+  introFrames,
+  outroFrames,
+  videoHeight,
+  videoWidth,
+} from "./const";
 import "./index.css";
 
 export const RemotionVideo: React.FC = () => {
@@ -15,12 +21,9 @@ export const RemotionVideo: React.FC = () => {
     const midi = await Midi.fromUrl(midiSrc);
     setMidi(midi);
 
-    console.log(midi);
-
     const totalFrames =
       introFrames + Math.round(midi.duration * fps) + outroFrames;
     setTotalFrames(totalFrames);
-    console.log(totalFrames);
 
     continueRender(handle);
   }, [handle]);
@@ -34,8 +37,8 @@ export const RemotionVideo: React.FC = () => {
       id="main"
       component={Main}
       fps={fps}
-      width={1920}
-      height={1080}
+      width={videoWidth}
+      height={videoHeight}
       durationInFrames={totalFrames}
       defaultProps={{
         midi,

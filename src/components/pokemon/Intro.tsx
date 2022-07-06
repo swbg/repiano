@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { interpolate, spring } from "remotion";
-import { songTitle } from "../../config";
+import { Img, interpolate, spring, staticFile } from "remotion";
+import { songId, songTitle } from "../../config";
 import {
   fps,
   introFrames,
@@ -8,13 +7,9 @@ import {
   introWaitFrames,
   videoHeight,
 } from "../../const";
-import backgroundGrass from "./assets/background_grass.png";
-import pokemonLogo from "./assets/International_Pokémon_logo.svg";
-import palletTown from "./assets/pallet_town.png";
-import redAndBlue from "./assets/red_and_blue_version.png";
 import "./pokemon.css";
 
-const BG_TILE_SIZE = 8;
+// Make background images 512 x 288
 
 export const Intro: React.FC<{ frame: number }> = ({ frame }) => {
   const opacity = interpolate(
@@ -42,33 +37,16 @@ export const Intro: React.FC<{ frame: number }> = ({ frame }) => {
     extrapolateRight: "clamp",
   });
 
-  const titleImage = useRef<HTMLImageElement | null>(null);
-  const [bgScaleFactor, setBgScaleFactor] = useState(1);
-
-  useEffect(() => {
-    if (titleImage && titleImage.current) {
-      setBgScaleFactor(videoHeight / titleImage.current.naturalHeight);
-      console.log(videoHeight / titleImage.current.naturalHeight);
-    }
-  }, [titleImage]);
-
   return (
-    <div
-      className="intro"
-      style={{
-        opacity,
-        backgroundImage: `url(${backgroundGrass})`,
-        backgroundSize: `${BG_TILE_SIZE * bgScaleFactor}px`,
-      }}
-    >
-      <img
+    <div className="intro" style={{ opacity }}>
+      <Img
         className="introLogo"
-        src={pokemonLogo}
+        src={staticFile("/img/pokemon/pokemon_logo.svg")}
         style={{ top: 0.5 * videoHeight * (logoPosition - 0.75) }}
       />
-      <img
+      <Img
         className="versionTitle"
-        src={redAndBlue}
+        src={staticFile("/img/pokemon/red_and_blue_version.png")}
         style={{ opacity: titleOpacity }}
       />
       <svg className="songTitle" style={{ opacity: titleOpacity }}>
@@ -77,7 +55,10 @@ export const Intro: React.FC<{ frame: number }> = ({ frame }) => {
         </text>
       </svg>
       <div className="veil" style={{ opacity: 1 - 0.25 * titleOpacity }} />
-      <img ref={titleImage} className="titleImage" src={palletTown} />
+      <Img
+        className="titleImage"
+        src={staticFile(`/img/pokemon/${songId}.png`)}
+      />
     </div>
   );
 };

@@ -1,12 +1,14 @@
+import { staticFile } from "remotion";
 import { videoWidth } from "../../const";
-import trainerFaceLeft from "./assets/trainerFaceLeft.png";
-import trainerFaceRight from "./assets/trainerFaceRight.png";
-import trainerWalkLeft from "./assets/trainerWalkLeft.png";
-import trainerWalkRight from "./assets/trainerWalkRight.png";
 import "./pokemon.css";
 
 const SPRITE_SIZE = 32;
 const FRAMES_PER_LOOP = 4;
+
+const trainerFaceLeft = staticFile("/img/pokemon/trainer_face_left.png");
+const trainerFaceRight = staticFile("/img/pokemon/trainer_face_right.png");
+const trainerWalkLeft = staticFile("/img/pokemon/trainer_walk_left.png");
+const trainerWalkRight = staticFile("/img/pokemon/trainer_walk_right.png");
 
 export const TopBar: React.FC<{ frame: number }> = ({ frame }) => {
   const maxAnimIndex =

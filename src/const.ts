@@ -27,7 +27,7 @@ export const blackKeyHeight = pxPerCm * 9.8;
 export const previewHeight = videoHeight - whiteKeyHeight;
 
 // Length of the preview interval in seconds
-export const previewDuration = 8;
+export const previewDuration = 4;
 
 // How long to pause between key strokes in seconds
 export const strokeInterval = 0.15;
