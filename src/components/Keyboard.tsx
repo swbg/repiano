@@ -1,5 +1,5 @@
 import { Midi } from "@tonejs/midi";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import {
   aaFramesPerLoop,
   fps,
