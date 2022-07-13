@@ -8,29 +8,35 @@
   background-color: white;
 }
 
-.introLogo {
+/* .introLogo {
   margin: 0 auto;
   display: block;
   width: 50%;
   position: relative;
+} */
+
+.introLogo {
+  display: block;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .versionTitle {
-  margin: 0 auto;
   display: block;
-  height: 35px;
-  position: relative;
-  top: 150px;
-  image-rendering: crisp-edges;
+  height: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  /* image-rendering: crisp-edges; /* not supported */
 }
 
 .songTitle {
-  margin: 0 auto;
   display: block;
   width: 100%;
   text-align: center;
-  position: relative;
-  top: 220px;
+  position: absolute;
   height: 100px;
   font-family: "Nanum Pen Script", cursive;
   overflow: visible;
@@ -56,13 +62,13 @@
 }
 
 .titleImage {
-  image-rendering: crisp-edges;
   height: 100%;
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
   z-index: -2;
+  /* image-rendering: crisp-edges; /* not supported */
 }
 
 /* Pokemon Bar */

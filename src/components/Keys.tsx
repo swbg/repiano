@@ -18,7 +18,7 @@ const KeyAnimation: React.FC<{
   clip: number;
 }> = ({ frame, width, clip }) => {
   const ELEMENTS_PER_PIXEL = 3;
-  if (aaFramesPerLoop <= clip) {
+  if (clip === undefined || aaFramesPerLoop <= clip) {
     return null;
   }
   return (
@@ -64,8 +64,8 @@ export const WhiteKey: React.FC<{
   keyIdx: number;
   color: number;
   frame: number;
-  activeCounter: number;
-}> = ({ keyIdx, color, frame, activeCounter }) => {
+  animated: number;
+}> = ({ keyIdx, color, frame, animated }) => {
   const style = {
     height: whiteKeyHeight,
     width: whiteKeyWidth,
@@ -79,11 +79,7 @@ export const WhiteKey: React.FC<{
           backgroundColor: keyColors[color],
         }}
       >
-        <KeyAnimation
-          frame={frame}
-          width={whiteKeyWidth}
-          clip={activeCounter}
-        />
+        <KeyAnimation frame={frame} width={whiteKeyWidth} clip={animated} />
         <span className="cIndicator">{getCNote(keyIdx)}</span>
         <span className="activeIndicator">{getBaseNote(keyIdx)}</span>
       </div>
@@ -91,7 +87,7 @@ export const WhiteKey: React.FC<{
   }
   return (
     <div className="whiteKey" style={style}>
-      <KeyAnimation frame={frame} width={whiteKeyWidth} clip={activeCounter} />
+      <KeyAnimation frame={frame} width={whiteKeyWidth} clip={animated} />
       <span className="cIndicator">{getCNote(keyIdx)}</span>
     </div>
   );
@@ -101,8 +97,8 @@ export const BlackKey: React.FC<{
   keyIdx: number;
   color: number;
   frame: number;
-  activeCounter: number;
-}> = ({ keyIdx, color, frame, activeCounter }) => {
+  animated: number;
+}> = ({ keyIdx, color, frame, animated }) => {
   const style = {
     height: blackKeyHeight,
     width: blackKeyWidth,
@@ -125,11 +121,7 @@ export const BlackKey: React.FC<{
           backgroundColor: blackKeyColors[color],
         }}
       >
-        <KeyAnimation
-          frame={frame}
-          width={blackKeyWidth}
-          clip={activeCounter}
-        />
+        <KeyAnimation frame={frame} width={blackKeyWidth} clip={animated} />
         <div
           className="blackKeyInnerActive"
           style={{
@@ -143,7 +135,7 @@ export const BlackKey: React.FC<{
   }
   return (
     <div className="blackKey" style={style}>
-      <KeyAnimation frame={frame} width={blackKeyWidth} clip={activeCounter} />
+      <KeyAnimation frame={frame} width={blackKeyWidth} clip={animated} />
       <div className="blackKeyInner" />
     </div>
   );

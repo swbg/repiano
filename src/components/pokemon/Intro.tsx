@@ -47,9 +47,12 @@ export const Intro: React.FC<{ frame: number }> = ({ frame }) => {
       <Img
         className="versionTitle"
         src={staticFile("/img/pokemon/red_and_blue_version.png")}
-        style={{ opacity: titleOpacity }}
+        style={{ opacity: titleOpacity, top: 0.45 * videoHeight }}
       />
-      <svg className="songTitle" style={{ opacity: titleOpacity }}>
+      <svg
+        className="songTitle"
+        style={{ opacity: titleOpacity, top: 0.55 * videoHeight }}
+      >
         <text className="songTitleText" y="100%" x="50%">
           {songTitle}
         </text>

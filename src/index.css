@@ -63,8 +63,13 @@ body {
 .previewBar {
   position: absolute;
   border-radius: 3px;
-  box-shadow: 0 0 2px black inset;
+  box-shadow: 0 0 2px black inset, 0 0 4px rgba(0, 0, 0, 0.6);
   z-index: 20;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0),
+    70%,
+    rgba(255, 255, 255, 0.25)
+  );
 }
 
 .verticalIndicator {

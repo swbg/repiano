@@ -2,6 +2,7 @@ import { Midi } from "@tonejs/midi";
 import { Fragment, useEffect, useState } from "react";
 import {
   aaFramesPerLoop,
+  fps,
   midiIdxOffset,
   nKeys,
   strokeInterval,
@@ -25,29 +26,48 @@ const getActiveKeys = (midi: Midi, frame: number, coreFrames: number) => {
   });
 };
 
+const getAnimatedKeys = (midi: Midi, frame: number, coreFrames: number) => {
+  return midi.tracks
+    .map((track) => {
+      // Corresponding duration at top of keyboard
+      const curDuration = (frame / coreFrames) * track.duration;
+
+      return track.notes
+        .filter(
+          (note) =>
+            note.time <= curDuration &&
+            curDuration <= note.time + note.duration + aaFramesPerLoop / fps
+        )
+        .map((note) => ({
+          keyIdx: note.midi + midiIdxOffset,
+          count: Math.max(0, (curDuration - note.time - note.duration) * fps),
+        }));
+    })
+    .reduce<{ [key: number]: number }>(
+      (midiAcc, midiItem) => ({
+        ...midiAcc,
+        ...midiItem.reduce<{ [key: number]: number }>(
+          (trackAcc, trackItem) => ({
+            ...trackAcc,
+            [trackItem.keyIdx]: Math.min(
+              trackItem.count,
+              midiAcc[trackItem.keyIdx] || aaFramesPerLoop
+            ),
+          }),
+          {}
+        ),
+      }),
+      {}
+    );
+};
+
 export const Keyboard: React.FC<{
   midi: Midi;
   frame: number;
   coreFrames: number;
 }> = ({ midi, frame, coreFrames }) => {
-  const [activeCounter, setActiveCounter] = useState(
-    Array.from({ length: nKeys }).map(() => aaFramesPerLoop + 1)
-  );
   const activeKeys = getActiveKeys(midi, frame, coreFrames);
-
-  useEffect(() => {
-    const flatActiveKeys = activeKeys.reduce(
-      (acc, val) => [...acc, ...val],
-      []
-    );
-    setActiveCounter((activeCounter) =>
-      activeCounter.map((v, keyIdx) =>
-        flatActiveKeys.indexOf(keyIdx) >= 0
-          ? 0
-          : Math.min(v + 1, aaFramesPerLoop + 1)
-      )
-    );
-  }, [frame]);
+  const animatedKeys = getAnimatedKeys(midi, frame, coreFrames);
 
   return (
     <div className="keys">
@@ -65,7 +85,7 @@ export const Keyboard: React.FC<{
               keyIdx={keyIdx}
               color={color}
               frame={frame}
-              activeCounter={activeCounter[keyIdx]}
+              animated={animatedKeys[keyIdx]}
             />
           );
         } else {
@@ -76,7 +96,7 @@ export const Keyboard: React.FC<{
                 keyIdx={keyIdx}
                 color={color}
                 frame={frame}
-                activeCounter={activeCounter[keyIdx]}
+                animated={animatedKeys[keyIdx]}
               />
               <div
                 key={`sep-${keyIdx}`}

@@ -47,6 +47,9 @@ export const blackKeyDarkShadowColors = keyColors.map((c) =>
   substractFromColor(c, 96)
 );
 
+// Watermark
+export const watermark = "Bits and Pieces";
+
 // Active animation
 export const aaFramesPerLoop = 15;
 

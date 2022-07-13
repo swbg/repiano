@@ -8,9 +8,9 @@ import {
   pureOutroFrames,
   whiteKeyHeight,
 } from "../const";
-import { Background } from "./Background";
 import { Outro } from "./generic/Outro";
 import { Keyboard } from "./Keyboard";
+import { Background } from "./pokemon/Background";
 import { Intro } from "./pokemon/Intro";
 import { TopBar } from "./pokemon/TopBar";
 import { PreviewArea } from "./PreviewArea";
