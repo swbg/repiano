@@ -1,8 +1,10 @@
-const substractFromColor = (color: string, sub: number) => {
+import { staticFile } from "remotion";
+
+const addToColor = (color: string, a: number) => {
   return (
     "#" +
     [color.substr(1, 2), color.substr(3, 2), color.substr(5, 2)]
-      .map((v) => Math.max(0, parseInt(v, 16) - sub))
+      .map((v) => Math.min(255, Math.max(0, parseInt(v, 16) + a)))
       .map((v) => (v < 16 ? "0" + v.toString(16) : v.toString(16)))
       .join("")
   );
@@ -27,7 +29,7 @@ export const blackKeyHeight = pxPerCm * 9.8;
 export const previewHeight = videoHeight - whiteKeyHeight;
 
 // Length of the preview interval in seconds
-export const previewDuration = 4;
+export const previewDuration = 3;
 
 // How long to pause between key strokes in seconds
 export const strokeInterval = 0.15;
@@ -36,19 +38,27 @@ export const strokeInterval = 0.15;
 export const minLabelPreviewHeight = 25;
 
 // Colors for preview bars and keys
-export const barColors = ["#b2df8a", "#a6cee3", "#fdbf6f", "#cab2d6"];
-export const keyColors = ["#b2df8a", "#a6cee3", "#fdbf6f", "#cab2d6"];
+export const keyColors = [
+  "#8dd3c7",
+  "#fca27b",
+  "#80b1d3",
+  "#fccde5",
+  "#b2df8a",
+  "#cab2d6",
+  "#b2df8a",
+  "#a6cee3",
+  "#fdbf6f",
+  "#cab2d6",
+];
 
-export const blackKeyColors = keyColors.map((c) => substractFromColor(c, 32));
-export const blackKeyShadowColors = keyColors.map((c) =>
-  substractFromColor(c, 64)
-);
+export const blackKeyColors = keyColors.map((c) => addToColor(c, -32));
+export const blackKeyShadowColors = keyColors.map((c) => addToColor(c, -64));
 export const blackKeyDarkShadowColors = keyColors.map((c) =>
-  substractFromColor(c, 96)
+  addToColor(c, -96)
 );
 
 // Watermark
-export const watermark = "Bits and Pieces";
+export const watermark = staticFile(`/img/watermark.svg`);
 
 // Active animation
 export const aaFramesPerLoop = 15;

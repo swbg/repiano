@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap");
+@font-face {
+  font-family: "Alte Haas Grotesk";
+  src: url("./font/AlteHaasGroteskRegular.ttf") format("truetype");
+}
 
 :root {
   --bg-color: #303333;
@@ -15,7 +18,9 @@ body {
   margin: 0;
   padding: 0;
   background-color: white;
-  font-family: "Rubik", sans-serif;
+  font-family: "Alte Haas Grotesk", sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 1.4rem;
 }
 
 /* Main */
@@ -43,12 +48,13 @@ body {
 }
 
 .watermark {
-  font-size: 5rem;
+  width: 22%;
   position: absolute;
-  bottom: 370px;
+  bottom: 400px;
   left: 50%;
   transform: translate(-50%, 0);
-  color: #333636;
+  filter: invert(100%);
+  opacity: 1%;
 }
 
 .horizontalIndicator {
@@ -62,13 +68,14 @@ body {
 /* PreviewArea */
 .previewBar {
   position: absolute;
-  border-radius: 3px;
-  box-shadow: 0 0 2px black inset, 0 0 4px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  box-shadow: 0 0 2px black inset, 0 0 2px rgba(0, 0, 0, 0.6);
   z-index: 20;
   background-image: linear-gradient(
-    rgba(255, 255, 255, 0),
-    70%,
-    rgba(255, 255, 255, 0.25)
+    90deg,
+    rgba(255, 255, 255, 0.25),
+    25%,
+    rgba(255, 255, 255, 0)
   );
 }
 
@@ -154,11 +161,10 @@ body {
 
 .cIndicator {
   position: absolute;
-  bottom: 2px;
+  bottom: 3px;
   width: 100%;
   display: inline-block;
   text-align: center;
-  font-size: 1.2rem;
 }
 
 /* Animation */
@@ -192,9 +198,8 @@ body {
 
 .activeIndicator {
   position: absolute;
-  top: -25px;
+  top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.2rem;
   z-index: 100;
 }

@@ -9,11 +9,12 @@ export const Background: React.FC<{}> = () => {
         className="introLogo"
         src={staticFile("/img/pokemon/pokemon_logo.svg")}
         style={{
-          opacity: 0.04,
+          opacity: 0.025,
           top: 0.125 * videoHeight,
+          filter: "saturate(25%)",
         }}
       />
-      <span className="watermark">{watermark}</span>
+      <Img className="watermark" src={watermark} />
       {[3, 15, 27, 39, 51, 63, 75, 87].map((keyIdx) => (
         <HorizontalIndicator key={`hi-${keyIdx}`} keyIdx={keyIdx} />
       ))}

@@ -1,7 +1,7 @@
 import {
-  barColors,
   blackKeyColors,
   blackKeyWidth,
+  keyColors,
   minLabelPreviewHeight,
   whiteKeyWidth,
 } from "../const";
@@ -18,11 +18,11 @@ export const PreviewBar: React.FC<{
     <div
       className="previewBar"
       style={{
-        left: getKeyPosition(keyIdx),
-        top: positionY,
-        height: height,
-        backgroundColor: flagBlack ? blackKeyColors[color] : barColors[color],
-        width: flagBlack ? blackKeyWidth : whiteKeyWidth,
+        left: getKeyPosition(keyIdx) + 1,
+        top: positionY + 2,
+        height: height - 2,
+        backgroundColor: flagBlack ? blackKeyColors[color] : keyColors[color],
+        width: flagBlack ? blackKeyWidth - 2 : whiteKeyWidth - 2,
       }}
     >
       {height > minLabelPreviewHeight && (
