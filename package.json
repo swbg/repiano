@@ -5,6 +5,7 @@
   "scripts": {
     "start": "remotion preview src/index.tsx",
     "build": "remotion render src/index.tsx Main out/video.mp4",
+    "build_thumbnail": "remotion render --sequence --frames=42 src/index.tsx Thumbnail out/",
     "upgrade": "remotion upgrade",
     "server": "ts-node server.tsx",
     "test": "eslint src --ext ts,tsx,js,jsx && tsc"

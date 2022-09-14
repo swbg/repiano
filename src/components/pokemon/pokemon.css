@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"); */
+
+@font-face {
+  font-family: "Poetsen One";
+  src: url("./../../font/PoetsenOneRegular.ttf") format("truetype");
+}
 
 /* Intro */
 .intro {
@@ -22,6 +27,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 5000;
   /* image-rendering: crisp-edges; /* not supported */
 }
 
@@ -30,16 +36,17 @@
   width: 100%;
   text-align: center;
   position: absolute;
-  height: 100px;
-  font-family: "Nanum Pen Script", cursive;
+  height: 80px;
+  font-family: "Poetsen One", sans-serif;
   overflow: visible;
+  z-index: 5000;
 }
 
 .songTitleText {
   fill: black;
   stroke: white;
   text-anchor: middle;
-  font-size: 10rem;
+  font-size: 8rem;
   stroke-width: 20px;
   paint-order: stroke;
 }
@@ -74,4 +81,32 @@
 .pokemonTrainer {
   position: relative;
   z-index: 1000;
+}
+
+/* Thumbnail Overlay */
+.darkVeil {
+  background-color: #303333;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  opacity: 0%;
+}
+
+.introLogoThumbnail {
+  display: block;
+  width: 42%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.songTitleTextThumbnail {
+  fill: black;
+  stroke: white;
+  text-anchor: middle;
+  font-size: 12rem;
+  stroke-width: 20px;
+  paint-order: stroke;
 }

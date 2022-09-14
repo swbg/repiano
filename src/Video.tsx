@@ -2,6 +2,7 @@ import { Midi } from "@tonejs/midi";
 import { useCallback, useEffect, useState } from "react";
 import { Composition, continueRender, delayRender } from "remotion";
 import { Main } from "./components/Main";
+import { Thumbnail } from "./components/Thumbnail";
 import { audioSrc, midiSrc } from "./config";
 import {
   fps,
@@ -33,17 +34,25 @@ export const RemotionVideo: React.FC = () => {
   }, [fetchData]);
 
   return (
-    <Composition
-      id="Main"
-      component={Main}
-      fps={fps}
-      width={videoWidth}
-      height={videoHeight}
-      durationInFrames={totalFrames}
-      defaultProps={{
-        midi,
-        audioSrc,
-      }}
-    />
+    <>
+      <Composition
+        id="Main"
+        component={Main}
+        fps={fps}
+        width={videoWidth}
+        height={videoHeight}
+        durationInFrames={totalFrames}
+        defaultProps={{ midi, audioSrc }}
+      />
+      <Composition
+        id="Thumbnail"
+        component={Thumbnail}
+        fps={fps}
+        width={videoWidth}
+        height={videoHeight}
+        durationInFrames={totalFrames}
+        defaultProps={{ midi }}
+      />
+    </>
   );
 };

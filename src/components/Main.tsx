@@ -45,6 +45,7 @@ export const Main: React.FC<{
           midi={midi}
           frame={frame - introFrames}
           coreFrames={coreFrames}
+          showVerticalIndicators={true}
         />
         <div className="separator1" style={{ bottom: whiteKeyHeight + 2 }} />
         <div className="separator2" style={{ bottom: whiteKeyHeight + 1 }} />

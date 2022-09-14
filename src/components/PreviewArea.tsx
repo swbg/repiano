@@ -58,9 +58,9 @@ export const PreviewArea: React.FC<{
   midi: Midi;
   frame: number;
   coreFrames: number;
-}> = ({ midi, frame, coreFrames }) => {
+  showVerticalIndicators: boolean;
+}> = ({ midi, frame, coreFrames, showVerticalIndicators }) => {
   const previewBars = getPreviewedKeys(midi, frame, coreFrames);
-  const verticalIndicators = getVerticalIndicators(midi, frame, coreFrames);
 
   return (
     <div className="previewArea">
@@ -75,9 +75,10 @@ export const PreviewArea: React.FC<{
           />
         ))
       )}
-      {verticalIndicators.map((positionY, idx) => (
-        <VerticalIndicator key={`vi-${idx}`} positionY={positionY} />
-      ))}
+      {showVerticalIndicators &&
+        getVerticalIndicators(midi, frame, coreFrames).map((positionY, idx) => (
+          <VerticalIndicator key={`vi-${idx}`} positionY={positionY} />
+        ))}
     </div>
   );
 };
